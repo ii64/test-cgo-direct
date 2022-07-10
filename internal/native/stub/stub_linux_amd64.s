@@ -6,6 +6,13 @@
 
 #define direct_subr_stack_sz 0
 
+TEXT ·Offset_subr(SB), NOSPLIT | NOFRAME, $0 - 8
+    NO_LOCAL_POINTERS
+
+    LEAQ subr(SB), AX
+    MOVQ AX, ret+0(FP)
+    RET
+
 // direct_subr(b []byte) uint64
 TEXT ·Direct_subr(SB), NOSPLIT | NOFRAME, $0 - 16
     NO_LOCAL_POINTERS

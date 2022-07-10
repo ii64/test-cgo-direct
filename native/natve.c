@@ -9,7 +9,7 @@ uint64_t subr(GoSlice *slice)
     if (!data) return -2;
     if (sizeof msg > slice->cap) return -3;
 
-    memset(data, '\0', slice->cap);
+    // memset(data, '\0', slice->cap);
 
     int nb = 0;
     while (nb < sizeof msg)

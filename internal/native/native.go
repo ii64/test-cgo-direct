@@ -2,10 +2,10 @@ package native
 
 /*
 #cgo CFLAGS: -I../../native/include
-#cgo amd64 linux LDFLAGS: -L../../native/build/x86_64-linux -lnative
 #include "native.h"
 */
 import "C"
+
 import (
 	"unsafe"
 
@@ -15,14 +15,13 @@ import (
 var Noop = 1
 
 func Init() {
-
+	Noop = 2
+	stub.ExpBLDecoding([8]byte{})
 }
 
 func Subr(b *[]byte) uint64 {
-	ptr := uintptr(unsafe.Pointer(b))
-	uptr := unsafe.Pointer(ptr)
-	// return uint64(uintptr(uptr))
-	return subr(uptr)
+	ptr := uintptr(unsafe.Pointer(b)) // !! breaking: possible misuse unsafe
+	return subr(unsafe.Pointer(ptr))
 }
 
 func subr(b unsafe.Pointer) uint64 {
@@ -31,4 +30,8 @@ func subr(b unsafe.Pointer) uint64 {
 
 func DirectSubr(b *[]byte) uint64 {
 	return stub.Direct_subr(b)
+}
+
+func OffsetSubr() unsafe.Pointer {
+	return stub.Offset_subr()
 }

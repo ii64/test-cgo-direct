@@ -14,6 +14,11 @@ func main() {
 		b = make([]byte, 32)
 	)
 
+	native.Init()
+
+	fnAddr := native.OffsetSubr()
+	fmt.Printf("subr: %+#v\n", fnAddr)
+
 	ret1 := native.Subr(&a)
 	fmt.Printf("ret1: %+#v\n", ret1)
 	fmt.Printf("a_str: %q\n", string(a))
